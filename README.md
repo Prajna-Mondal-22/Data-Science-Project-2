@@ -33,7 +33,7 @@ Build a regression model capable of predicting the **selling price of a used car
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
 The project uses a used-car dataset containing **8,128 records and 12 original features**.
 
@@ -249,6 +249,8 @@ B.Tech — Computer Science & Engineering
 ### Technical Skills
 
 `Python` · `SQL` · `Pandas` · `NumPy` · `Scikit-learn` · `Matplotlib` · `Seaborn` · `Power BI` · `Excel`
+
+* LinkedIn : https://www.linkedin.com/in/prajna-mondal-1b864137a/
 
 ---
 
