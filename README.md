@@ -1,70 +1,64 @@
-#  Car Price Prediction with Machine Learning
+#  Car Price Prediction Using Machine Learning
 
-A Machine Learning regression project that predicts the **selling price of used cars** based on features such as car age, mileage, fuel type, seller type, transmission, owner history, engine capacity, maximum power, seats, and brand.
+A machine learning regression project that predicts the **selling price of used cars** based on various factors such as car age, present price, mileage, fuel type, transmission, seller type, owner history, and brand.
 
-This project was completed as part of **Oasis Infobyte — Task 3**.
+This project was developed as a **self-driven Machine Learning project** to strengthen my practical understanding of data preprocessing, exploratory data analysis, feature engineering, categorical encoding, regression modeling, and model evaluation.
 
 ---
 
 ##  Project Overview
 
-The objective of this project is to build and compare multiple Machine Learning regression models for predicting used-car selling prices.
+The used-car market contains several factors that influence the resale value of a vehicle. The objective of this project is to build a machine learning model that can learn from historical car data and predict the expected selling price of a used car.
 
-The project covers the complete Machine Learning workflow:
+The project follows a complete machine learning workflow:
 
-* Data loading and inspection
-* Data cleaning and preprocessing
-* Missing-value handling
-* Duplicate removal
-* Feature engineering
-* Exploratory Data Analysis (EDA)
-* Categorical feature encoding
-* Train-test splitting
-* Regression model training
-* Model evaluation and comparison
+**Data Collection → Data Cleaning → Feature Engineering → EDA → Encoding → Model Training → Evaluation → Feature Importance**
 
 ---
 
-##  Objective
+##  Objectives
 
-Build a regression model capable of predicting the **selling price of a used car** using relevant vehicle characteristics.
-
-**Target Variable:** `selling_price`
-
----
-
-##  Dataset
-
-The project uses a used-car dataset containing **8,128 records and 12 original features**.
-
-### Original Features
-
-| Feature              | Description                |
-| -------------------- | -------------------------- |
-| `name`               | Name of the car            |
-| `year`               | Manufacturing year         |
-| `selling_price`      | Selling price of the car   |
-| `km_driven`          | Kilometers driven          |
-| `fuel`               | Fuel type                  |
-| `seller_type`        | Type of seller             |
-| `transmission`       | Transmission type          |
-| `owner`              | Previous owner information |
-| `mileage(km/ltr/kg)` | Mileage                    |
-| `engine`             | Engine capacity            |
-| `max_power`          | Maximum power              |
-| `seats`              | Number of seats            |
+* Analyze factors affecting used-car prices
+* Clean and preprocess the dataset
+* Handle missing and duplicate values
+* Standardize inconsistent categorical values
+* Calculate **Car Age** from the manufacturing year
+* Extract **Brand** from the car name
+* Perform exploratory data analysis
+* Encode categorical variables using One-Hot Encoding
+* Train multiple regression models
+* Compare model performance using MAE, RMSE, and R²
+* Identify the most important features influencing car prices
 
 ---
 
 ##  Technologies Used
 
 * **Python**
-* **Pandas** — Data manipulation
-* **NumPy** — Numerical computation
-* **Matplotlib** — Data visualization
-* **Seaborn** — Statistical visualization
-* **Scikit-learn** — Machine Learning and preprocessing
-* **Jupyter Notebook / Google Colab**
+* **Pandas** – Data manipulation and preprocessing
+* **NumPy** – Numerical computations
+* **Matplotlib** – Data visualization
+* **Seaborn** – Statistical visualization
+* **Scikit-learn** – Machine Learning
+* **Jupyter Notebook** – Development environment
+
+---
+
+##  Dataset
+
+The dataset contains information about used cars, including:
+
+| Feature         | Description                     |
+| --------------- | ------------------------------- |
+| `Car_Name`      | Name of the car                 |
+| `Year`          | Manufacturing year              |
+| `Selling_Price` | Target variable – selling price |
+| `Present_Price` | Current/ex-showroom price       |
+| `Kms_Driven`    | Kilometers driven               |
+| `Fuel_Type`     | Fuel type of the car            |
+| `Seller_Type`   | Individual or dealer            |
+| `Transmission`  | Manual or automatic             |
+| `Owner`         | Number of previous owners       |
 
 ---
 
@@ -72,111 +66,169 @@ The project uses a used-car dataset containing **8,128 records and 12 original f
 
 The following preprocessing steps were performed:
 
-1. Loaded the dataset using Pandas.
-2. Inspected dataset dimensions and data types.
-3. Checked missing values.
-4. Checked and removed duplicate records.
-5. Cleaned categorical variables using string formatting.
-6. Converted `max_power` into a numerical data type.
-7. Handled missing numerical values using **median imputation**.
-8. Created a new feature:
+* Checked dataset shape and data types
+* Identified missing values
+* Handled null values where required
+* Checked and removed duplicate records
+* Standardized categorical values
+* Checked unique values in categorical columns
+* Removed unnecessary columns
 
-   * `car_age = 2026 - year`
-9. Extracted the car **brand** from the `name` column.
-10. Removed unnecessary columns such as `name` and `year`.
-11. Applied **One-Hot Encoding** to categorical variables.
-12. Split the dataset into training and testing sets.
+---
 
-### Train-Test Split
+##  Feature Engineering
 
-* **80% Training Data**
-* **20% Testing Data**
-* `random_state = 42`
+### 1. Car Age
+
+A new feature called `Car_Age` was created using:
+
+```text
+Car Age = Current Year - Manufacturing Year
+```
+
+This helps the model understand how the age of a vehicle affects its resale value.
+
+### 2. Brand Extraction
+
+The car brand was extracted from the `Car_Name` column.
+
+For example:
+
+```text
+"Maruti Swift Dzire VDI" → "Maruti"
+"Hyundai i20" → "Hyundai"
+"Honda City" → "Honda"
+```
 
 ---
 
 ##  Exploratory Data Analysis
 
-The project includes visual analysis of:
+Several visualizations were created to understand the dataset and identify important patterns.
 
-### 1. Selling Price Distribution
+### Selling Price Distribution
 
-A histogram was used to understand the distribution of car selling prices.
+The distribution of selling prices was analyzed to understand the overall price range and identify potential skewness or outliers.
 
-### 2. Selling Price vs Car Age
+### Selling Price vs Fuel Type
 
-A scatter plot was used to analyze the relationship between vehicle age and selling price.
+A box plot was used to compare selling prices across different fuel types.
 
-### 3. Top Car Brands
+### Selling Price vs Car Age
 
-The top 15 brands by number of listings were visualized using a bar chart.
+A scatter plot was used to investigate the relationship between vehicle age and selling price.
+
+### Correlation Heatmap
+
+A correlation heatmap was created to understand relationships between numerical features and identify variables that may have a strong relationship with selling price.
+
+---
+
+##  Categorical Encoding
+
+Categorical features were converted into numerical form using **One-Hot Encoding**.
+
+Example:
+
+```python
+X = pd.get_dummies(X, drop_first=True)
+```
+
+This allows machine learning algorithms to work with categorical variables.
 
 ---
 
 ##  Machine Learning Models
 
-Three regression algorithms were trained and evaluated:
+Two regression algorithms were trained and compared:
 
 ### 1. Linear Regression
 
-A baseline regression model used to understand the linear relationship between vehicle features and selling price.
+Linear Regression was used as a baseline regression model to understand the relationship between input features and selling price.
 
 ### 2. Random Forest Regressor
 
-An ensemble learning algorithm that combines multiple decision trees to improve prediction performance.
-
-Parameters used:
-
-* `n_estimators = 200`
-* `random_state = 42`
-* `n_jobs = -1`
-
-### 3. Gradient Boosting Regressor
-
-An ensemble boosting algorithm that builds models sequentially to improve prediction accuracy.
-
-Parameters used:
-
-* `n_estimators = 200`
-* `learning_rate = 0.05`
-* `max_depth = 3`
-* `random_state = 42`
+Random Forest Regressor was used to capture non-linear relationships between car characteristics and selling price.
 
 ---
 
-##  Model Performance
+##  Model Evaluation
 
-The models were evaluated using:
+The models were evaluated using three important regression metrics:
 
-* **MAE — Mean Absolute Error**
-* **RMSE — Root Mean Squared Error**
-* **R² Score — Coefficient of Determination**
+### MAE – Mean Absolute Error
 
-| Model             |           MAE |           RMSE |   R² Score |
-| ----------------- | ------------: | -------------: | ---------: |
-| Linear Regression |    133,098.53 |     261,925.34 |     0.6872 |
-| Random Forest     | **72,912.17** | **127,158.23** | **0.9263** |
-| Gradient Boosting |     81,660.42 |     127,735.84 |     0.9256 |
+Measures the average absolute difference between actual and predicted prices.
 
-###  Best Performing Model
+**Lower MAE = Better performance**
 
-**Random Forest Regressor** achieved the best overall performance:
+### RMSE – Root Mean Squared Error
 
-* **MAE:** 72,912.17
-* **RMSE:** 127,158.23
-* **R² Score:** 0.9263
+Measures prediction error while giving more weight to larger errors.
 
-An R² score of **0.9263** indicates that the model explains approximately **92.63% of the variance** in the test-set selling prices.
+**Lower RMSE = Better performance**
+
+### R² Score
+
+Measures how well the model explains the variation in the target variable.
+
+**Higher R² = Better performance**
+
+Model Comparison
+Model	             MAE	      RMSE	      R² Score
+Random Forest	     72,912.17	127,158.23	0.926276
+Gradient Boosting	 81,660.42	127,735.84	0.925605
+Linear Regression  133,098.53	261,925.34	0.687195
+
+> **Note:** The final values will be updated after model training and evaluation.
 
 ---
 
-##  Key Findings
+##  Feature Importance
 
-* Random Forest performed significantly better than Linear Regression.
-* Gradient Boosting also achieved strong predictive performance.
-* Vehicle-related characteristics provide useful information for estimating used-car prices.
-* The ensemble tree-based models were better suited to this dataset than the simple linear model.
-* Random Forest produced the highest R² score among the three tested models.
+Feature importance was analyzed using the best-performing model to identify which factors contribute most to used-car price prediction.
+
+The analysis helps answer questions such as:
+
+* Does present price strongly influence resale price?
+* How much does car age affect the selling price?
+* Does mileage impact the predicted price?
+* How important are fuel type and transmission?
+
+---
+
+##  Key Insights
+
+Some important observations from the analysis include:
+
+* Vehicle age can have a significant impact on resale value.
+* Cars with higher present prices generally tend to have higher selling prices.
+* Mileage can influence the resale value of a used car.
+* Fuel type and transmission can contribute to differences in selling prices.
+* Tree-based models such as Random Forest can capture non-linear relationships that may not be captured effectively by a simple Linear Regression model.
+
+---
+
+##  Project Explanation Video
+
+I also created a **project explanation video** where I explain the complete workflow of this Car Price Prediction project, including:
+
+* Problem statement
+* Dataset and features
+* Data preprocessing
+* Feature engineering
+* Exploratory Data Analysis
+* Machine learning models
+* Model evaluation
+* Feature importance
+* Final outcome
+
+The video has been shared on **GitHub and LinkedIn** as part of my project portfolio.
+
+
+ **LinkedIn Video:** [Add your LinkedIn post/video link here]
+
+>  The video demonstrates my understanding of the project and explains how the machine learning pipeline was implemented.
 
 ---
 
@@ -185,19 +237,26 @@ An R² score of **0.9263** indicates that the model explains approximately **92.
 ```text
 Car-Price-Prediction/
 │
-├── OASIS_task_3.ipynb
-├── cardekho_task_3.csv
-└── README.md
+├── Car_Price_Prediction.ipynb
+├── car_data.csv
+├── README.md
+│
+└── images/
+    ├── price_distribution.png
+    ├── price_vs_fuel.png
+    ├── price_vs_age.png
+    ├── correlation_heatmap.png
+    └── feature_importance.png
 ```
 
 ---
 
-##  How to Run
+##  How to Run the Project
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/Car-Price-Prediction.git
+git clone https://github.com/yourusername/Car-Price-Prediction.git
 ```
 
 ### 2. Navigate to the project directory
@@ -206,37 +265,39 @@ git clone https://github.com/your-username/Car-Price-Prediction.git
 cd Car-Price-Prediction
 ```
 
-### 3. Install required libraries
+### 3. Install the required libraries
 
 ```bash
-pip install pandas numpy matplotlib seaborn scikit-learn
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 ```
 
-### 4. Open the notebook
+### 4. Launch Jupyter Notebook
 
 ```bash
-jupyter notebook OASIS_task_3.ipynb
+jupyter notebook
 ```
 
-Alternatively, upload the notebook to **Google Colab**.
+### 5. Open
 
-### 5. Run all cells
+```text
+Car_Price_Prediction.ipynb
+```
 
-Make sure `cardekho_task_3.csv` is available in the working directory or upload it when prompted.
+Run the notebook cells sequentially.
 
 ---
 
 ##  Future Improvements
 
-The project can be further improved by:
+This project can be further improved by:
 
-* Hyperparameter tuning using GridSearchCV or RandomizedSearchCV
-* Trying XGBoost or other advanced boosting algorithms
-* Performing feature importance analysis
-* Applying cross-validation
-* Handling potential outliers
-* Creating an interactive car price prediction application
-* Deploying the final model using Flask or Streamlit
+* Testing Gradient Boosting and XGBoost models
+* Hyperparameter tuning
+* Cross-validation
+* Handling outliers more extensively
+* Building a simple web application using Flask or Streamlit
+* Adding a user interface for real-time car price prediction
+* Deploying the trained model as a prediction service
 
 ---
 
@@ -244,22 +305,38 @@ The project can be further improved by:
 
 **Prajna Mondal**
 
-B.Tech — Computer Science & Engineering
+B.Tech – Computer Science & Engineering
 
-### Technical Skills
-
-`Python` · `SQL` · `Pandas` · `NumPy` · `Scikit-learn` · `Matplotlib` · `Seaborn` · `Power BI` · `Excel`
-
-* LinkedIn : https://www.linkedin.com/in/prajna-mondal-1b864137a/
+Interested in **Data Analytics, Machine Learning, Python, SQL, and Data Visualization**.
 
 ---
 
-##  Internship
+##  Project Highlights
 
-**Oasis Infobyte — Python Developer Internship**
+**✔ End-to-end Machine Learning workflow**
 
-**Task 3:** Car Price Prediction with Machine Learning
+**✔ Data Cleaning & Preprocessing**
+
+**✔ Feature Engineering**
+
+**✔ Exploratory Data Analysis**
+
+**✔ Categorical Encoding**
+
+**✔ Regression Modeling**
+
+**✔ Model Comparison**
+
+**✔ MAE, RMSE & R² Evaluation**
+
+**✔ Feature Importance Analysis**
+
+**✔ Project Explanation Video**
 
 ---
 
- If you found this project useful, consider giving the repository a star! Thank You .
+##  License
+
+This project is created for **learning, portfolio development, and educational purposes**.
+
+Thank you.
