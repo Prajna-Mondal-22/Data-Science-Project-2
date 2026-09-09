@@ -226,7 +226,8 @@ I also created a **project explanation video** where I explain the complete work
 The video has been shared on **GitHub and LinkedIn** as part of my project portfolio.
 
 
- **LinkedIn Video:** [Add your LinkedIn post/video link here]
+ **LinkedIn Video:** -- https://lnkd.in/p/dbeD8gF5
+ 
 
 >  The video demonstrates my understanding of the project and explains how the machine learning pipeline was implemented.
 
